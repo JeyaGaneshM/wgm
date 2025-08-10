@@ -1,0 +1,22 @@
+/* Leaflet Fix for missing icons */
+.leaflet-container {
+  height: 100vh;
+  width: 100%;
+}
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas {
+  image-rendering: auto;
+}
+
+.custom-close-btn:hover {
+  background: #eee;
+}
+.reopen-nav-btn:hover {
+  background: #eee;
+}
