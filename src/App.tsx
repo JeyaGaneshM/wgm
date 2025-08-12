@@ -11,6 +11,13 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: '/marker-icon-2x.png',
+  iconUrl: '/marker-icon.png',
+  shadowUrl: '/marker-shadow.png',
+});
+
 // 🪦 List of graves
 const graves = [
   { lat: 12.972442, lng: 77.580643, name: "John Doe", age: 75 },
@@ -109,35 +116,38 @@ function Routing({ start, end }: { start: L.LatLngExpression, end: L.LatLngExpre
 }
 
 function App() {
-  const [userPos, setUserPos] = useState<L.LatLngExpression | null>(null);
+  // const [userPos, setUserPos] = useState<L.LatLngExpression | null>(null);
+  const [userPos, setUserPos] = useState<L.LatLngExpression>([12.9728512, 77.5815168]);
   const [selectedGrave, setSelectedGrave] = useState<L.LatLngExpression | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your device.");
-      return;
-    }
+  // useEffect(() => {
+  //   if (!navigator.geolocation) {
+  //     alert("Geolocation is not supported by your device.");
+  //     return;
+  //   }
 
-    const watchId = navigator.geolocation.watchPosition(
-      (pos) => {
-        const newPos: L.LatLngExpression = [
-          pos.coords.latitude,
-          pos.coords.longitude,
-        ];
-        setUserPos(newPos);
-        console.log('lat:'+pos.coords.latitude);
-        console.log('long:'+pos.coords.longitude);
-      },
-      (err) => {
-        console.error("Location error:", err);
-        alert("Unable to get your location");
-      },
-      { enableHighAccuracy: true, maximumAge: 0 }
-    );
+  //   const watchId = navigator.geolocation.watchPosition(
+  //     (pos) => {
+  //       const newPos: L.LatLngExpression = [
+  //         pos.coords.latitude,
+  //         pos.coords.longitude,
+  //       ];
+  //       setUserPos(newPos);
+  //       console.log('lat:'+pos.coords.latitude);
+  //       console.log('long:'+pos.coords.longitude);
+  //     },
+  //     (err) => {
+  //       console.error("Location error:", err);
+  //       alert("Unable to get your location");
+  //     },
+  //     { enableHighAccuracy: true, maximumAge: 0 }
+  //   );
 
-    return () => navigator.geolocation.clearWatch(watchId);
-  }, []);
+  //   return () => navigator.geolocation.clearWatch(watchId);
+  // }, []);
+  
+  
 
   const filteredGraves = graves.filter(g =>
     g.name.toLowerCase().includes(searchTerm.toLowerCase())
