@@ -12,11 +12,14 @@ import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
+const base = import.meta.env.BASE_URL; // gives "/grave-navigation/" in production
+
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: '/marker-icon-2x.png',
-  iconUrl: '/marker-icon.png',
-  shadowUrl: '/marker-shadow.png',
+  iconRetinaUrl: `${base}marker-icon-2x.png`,
+  iconUrl: `${base}marker-icon.png`,
+  shadowUrl: `${base}marker-shadow.png`,
 });
+
 
 // 🪦 List of graves
 const graves = [
